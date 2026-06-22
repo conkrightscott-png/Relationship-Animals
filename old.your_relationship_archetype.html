@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discover Your Relationship Archetype &mdash; Dr. Scott Conkright</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* =====================================================
+       DEVELOPER SETUP
+       Set FORMSPREE_ENDPOINT in the <script> below.
+       Sign up free at formspree.io to get your endpoint.
+       Update scottconkright.com links before going live.
+       ===================================================== */
+
+    :root {
+      --cream:        #F5F0E8;
+      --warm-white:   #FDFAF4;
+      --ink:          #1C1A16;
+      --ink-light:    #3D3A33;
+      --muted:        #7A7468;
+      --accent:       #C17B3F;
+      --accent-light: #E8C49A;
+      --accent-pale:  #F7EDE0;
+      --teal:         #2E5E5A;
+      --teal-mid:     #3D7A75;
+      --border:       #DDD5C8;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "DM Sans", sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; line-height: 1.6; }
+
+    .screen { display: none; min-height: 100vh; padding-bottom: 64px; }
+    .screen.active { display: block; }
+    .container { max-width: 700px; margin: 0 auto; padding: 0 24px; }
+
+    .site-header { background: var(--teal); padding: 16px 24px; text-align: center; }
+    .site-header-name { font-family: "Playfair Display", serif; color: var(--cream); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.82; }
+
+    /* ---- INTRO ---- */
+    .intro-hero { padding: 52px 0 44px; text-align: center; }
+    .eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 14px; display: block; }
+    .intro-hero h1 { font-family: "Playfair Display", serif; font-size: clamp(30px, 5.5vw, 50px); line-height: 1.14; font-weight: 700; margin-bottom: 20px; }
+    .intro-hero h1 em { font-style: italic; color: var(--teal); }
+    .intro-sub { font-size: 16px; color: var(--ink-light); max-width: 520px; margin: 0 auto 36px; font-weight: 300; line-height: 1.75; }
+    .archetype-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 40px; }
+    .pill { background: var(--warm-white); border: 1px solid var(--border); border-radius: 40px; padding: 5px 14px; font-size: 13px; color: var(--ink-light); }
+    .info-card { background: var(--warm-white); border: 1px solid var(--border); border-radius: 12px; padding: 26px 28px; text-align: left; margin-bottom: 36px; }
+    .info-card h3 { font-family: "Playfair Display", serif; font-size: 15px; margin-bottom: 12px; }
+    .info-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .info-card li { font-size: 14px; color: var(--ink-light); display: flex; align-items: flex-start; gap: 10px; }
+    .info-card li::before { content: "\2192"; color: var(--accent); flex-shrink: 0; }
+
+    .btn { display: inline-block; font-family: "DM Sans", sans-serif; font-size: 15px; font-weight: 500; padding: 13px 34px; border-radius: 6px; border: none; cursor: pointer; letter-spacing: 0.04em; transition: background 0.18s, transform 0.12s; text-decoration: none; }
+    .btn-primary { background: var(--teal); color: var(--cream); }
+    .btn-primary:hover { background: var(--teal-mid); transform: translateY(-1px); }
+    .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--ink-light); }
+    .btn-secondary:hover { border-color: var(--ink-light); }
+    .btn-outline { background: transparent; border: 1.5px solid currentColor; color: var(--teal); }
+    .btn-outline:hover { background: var(--teal); color: var(--cream); }
+
+    /* ---- PROGRESS ---- */
+    .progress-bar-wrap { padding: 24px 0 0; margin-bottom: 4px; }
+    .progress-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+    .progress-track { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.35s ease; }
+
+    /* ---- QUESTIONS ---- */
+    .section-label { font-family: "Playfair Display", serif; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding: 24px 0 18px; }
+    .q-block { background: var(--warm-white); border: 1px solid var(--border); border-radius: 10px; padding: 20px 22px; margin-bottom: 12px; transition: border-color 0.2s; }
+    .q-block.answered { border-color: var(--accent-light); }
+    .q-num { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; display: block; margin-bottom: 5px; }
+    .q-text { font-size: 15px; line-height: 1.65; color: var(--ink); margin-bottom: 14px; }
+    .response-row { display: flex; gap: 5px; flex-wrap: wrap; }
+    .resp-btn { flex: 1; min-width: 52px; padding: 8px 3px; background: var(--cream); border: 1px solid var(--border); border-radius: 6px; font-family: "DM Sans", sans-serif; font-size: 11.5px; color: var(--ink-light); cursor: pointer; text-align: center; transition: all 0.14s; line-height: 1.3; }
+    .resp-btn:hover { background: var(--accent-pale); border-color: var(--accent-light); }
+    .resp-btn.sel { background: var(--teal); border-color: var(--teal); color: white; font-weight: 500; }
+
+    .q-nav { display: flex; align-items: center; gap: 10px; padding-top: 24px; }
+    .nav-note { font-size: 12px; color: var(--muted); margin-left: 4px; }
+
+    /* ---- GATE ---- */
+    .gate-inner { max-width: 500px; margin: 56px auto 0; text-align: center; }
+    .gate-icon { font-size: 44px; margin-bottom: 18px; }
+    .gate-inner h2 { font-family: "Playfair Display", serif; font-size: clamp(22px, 4vw, 32px); margin-bottom: 12px; line-height: 1.2; }
+    .gate-inner > p { font-size: 15px; color: var(--ink-light); margin-bottom: 28px; font-weight: 300; line-height: 1.75; }
+    .gate-form-card { background: var(--warm-white); border: 1px solid var(--border); border-radius: 12px; padding: 28px; text-align: left; }
+    .field { margin-bottom: 14px; }
+    .field label { display: block; font-size: 13px; font-weight: 500; color: var(--ink-light); margin-bottom: 5px; }
+    .field input { width: 100%; padding: 10px 13px; border: 1px solid var(--border); border-radius: 6px; font-family: "DM Sans", sans-serif; font-size: 15px; color: var(--ink); background: var(--cream); outline: none; transition: border-color 0.18s; }
+    .field input:focus { border-color: var(--teal); }
+    .gate-error { color: #b94040; font-size: 13px; margin-top: 6px; display: none; }
+    .privacy-note { font-size: 12px; color: var(--muted); text-align: center; margin-top: 12px; }
+
+    /* ---- LOADING ---- */
+    .loading-wrap { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
+    .spinner { width: 34px; height: 34px; border: 3px solid var(--border); border-top-color: var(--teal); border-radius: 50%; animation: spin 0.75s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ---- RESULTS ---- */
+    .results-top { padding: 44px 0 32px; text-align: center; }
+    .results-top .profile-sub { font-family: "Playfair Display", serif; font-size: clamp(13px, 2vw, 17px); font-weight: 400; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+    .results-top .profile-title { font-family: "Playfair Display", serif; font-size: clamp(26px, 5vw, 40px); font-weight: 700; line-height: 1.15; }
+
+    .primary-card { background: var(--teal); color: var(--cream); border-radius: 14px; padding: 34px 30px; margin-bottom: 18px; position: relative; overflow: hidden; }
+    .primary-card::after { content: ""; position: absolute; bottom: -40px; right: -40px; width: 160px; height: 160px; background: rgba(255,255,255,0.04); border-radius: 50%; pointer-events: none; }
+    .card-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.65; margin-bottom: 6px; }
+    .card-emoji { font-size: 48px; display: block; margin-bottom: 8px; }
+    .card-name { font-family: "Playfair Display", serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; margin-bottom: 4px; }
+    .card-core { font-size: 14px; opacity: 0.8; font-style: italic; margin-bottom: 14px; }
+    .card-pct { display: inline-block; background: rgba(255,255,255,0.15); border-radius: 20px; padding: 4px 13px; font-size: 13px; font-weight: 500; margin-bottom: 18px; }
+    .card-desc { font-size: 15px; line-height: 1.78; opacity: 0.9; font-weight: 300; }
+
+    /* ---- SHARE CARD ---- */
+    .share-section { margin-bottom: 28px; }
+    .share-section-heading {
+      font-family: "Playfair Display", serif;
+      font-size: 18px;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+    .share-section-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .share-card-frame {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    /* The card itself — styled by JS inline styles per archetype */
+    #share-card {
+      width: 340px;
+      height: 700px;
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35), 0 4px 16px rgba(0,0,0,0.2);
+      cursor: default;
+      user-select: none;
+    }
+
+    /* Noise texture overlay */
+    #share-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      opacity: 0.06;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .sc-inner {
+      position: relative;
+      z-index: 2;
+      padding: 32px 28px 28px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sc-top-tag {
+      font-family: "DM Sans", sans-serif;
+      font-size: 9.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 500;
+      opacity: 0.6;
+      margin-bottom: 6px;
+    }
+    .sc-tag-line {
+      height: 1px;
+      width: 40px;
+      opacity: 0.3;
+      margin-bottom: 22px;
+    }
+    .sc-emoji {
+      font-size: 48px;
+      line-height: 1;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .sc-the {
+      font-family: "Playfair Display", serif;
+      font-size: 14px;
+      font-style: italic;
+      opacity: 0.7;
+      margin-bottom: 2px;
+    }
+    .sc-name {
+      font-family: "Playfair Display", serif;
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .sc-divider {
+      height: 1px;
+      width: 50px;
+      opacity: 0.25;
+      margin-bottom: 12px;
+    }
+    .sc-core {
+      font-family: "Playfair Display", serif;
+      font-size: 12.5px;
+      font-style: italic;
+      line-height: 1.6;
+      opacity: 0.75;
+      margin-bottom: 14px;
+    }
+    .sc-vulnerable {
+      font-family: "Playfair Display", serif;
+      font-size: 12px;
+      font-style: italic;
+      line-height: 1.6;
+      opacity: 0.65;
+      margin-bottom: 7px;
+    }
+    .sc-strength {
+      font-family: "DM Sans", sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.55;
+      margin-bottom: 14px;
+    }
+    .sc-matches {
+      font-family: "DM Sans", sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      opacity: 0.7;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .sc-matches-label {
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 9.5px;
+      opacity: 0.6;
+    }
+    .sc-bottom {
+      margin-top: 16px;
+    }
+    .sc-score-chip {
+      display: inline-block;
+      font-family: "DM Sans", sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.12);
+      margin-bottom: 14px;
+    }
+    .sc-footer-line {
+      height: 1px;
+      opacity: 0.18;
+      margin-bottom: 10px;
+    }
+    .sc-url {
+      font-family: "DM Sans", sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      opacity: 0.55;
+      letter-spacing: 0.04em;
+    }
+    .sc-brand {
+      font-family: "Playfair Display", serif;
+      font-size: 10px;
+      font-style: italic;
+      opacity: 0.4;
+      margin-top: 3px;
+    }
+
+    /* Decorative circle */
+    .sc-circle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .share-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .share-hint {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+    }
+    .share-btn-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+    /* ---- SECONDARY CARD ---- */
+    .secondary-card { background: var(--warm-white); border: 1px solid var(--border); border-radius: 12px; padding: 22px 26px; margin-bottom: 26px; display: flex; gap: 16px; align-items: flex-start; }
+    .sec-emoji { font-size: 30px; flex-shrink: 0; }
+    .sec-label { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 4px; }
+    .sec-name { font-family: "Playfair Display", serif; font-size: 20px; margin-bottom: 6px; }
+    .sec-desc { font-size: 14px; color: var(--ink-light); line-height: 1.68; font-weight: 300; }
+
+    /* ---- SCORE BARS ---- */
+    .profile-bars-section { margin-bottom: 34px; }
+    .profile-bars-section h3 { font-family: "Playfair Display", serif; font-size: 18px; margin-bottom: 16px; }
+    .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .bar-label { width: 120px; font-size: 13px; color: var(--ink-light); flex-shrink: 0; display: flex; align-items: center; gap: 5px; }
+    .bar-track { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+    .bar-fill { height: 100%; background: var(--accent); border-radius: 4px; transition: width 1s ease; }
+    .bar-fill.is-primary { background: var(--teal); }
+    .bar-pct { width: 36px; text-align: right; font-size: 12px; color: var(--muted); flex-shrink: 0; }
+    .bar-note { font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 10px; }
+
+    /* ---- CTA & FOOTER ---- */
+    .results-cta { background: var(--accent-pale); border: 1px solid var(--accent-light); border-radius: 12px; padding: 26px 28px; text-align: center; margin-bottom: 18px; }
+    .results-cta h3 { font-family: "Playfair Display", serif; font-size: 20px; margin-bottom: 8px; }
+    .results-cta p { font-size: 14px; color: var(--ink-light); margin-bottom: 18px; font-weight: 300; line-height: 1.7; }
+    .results-footer { text-align: center; padding-top: 18px; font-size: 13px; color: var(--muted); }
+    .results-footer a { color: var(--teal); text-decoration: none; }
+    .results-footer a:hover { text-decoration: underline; }
+
+    /* Hidden canvas for download */
+    #dl-canvas { display: none; }
+
+    @media (max-width: 480px) {
+      .resp-btn { font-size: 11px; padding: 7px 2px; }
+      .secondary-card { flex-direction: column; gap: 10px; }
+      .info-card { padding: 18px; }
+      #share-card { width: 300px; height: 617px; }
+      .sc-name { font-size: 34px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SCREEN 1: INTRO -->
+<div id="s-intro" class="screen active">
+  <div class="site-header">
+    <div class="site-header-name">Dr. Scott Conkright &middot; Meaningful Happiness</div>
+  </div>
+  <div class="container">
+    <div class="intro-hero">
+      <span class="eyebrow">Feel First &middot; A.R.T. Assessment</span>
+      <h1>Discover <em>Your Relationship</em><br>Archetype</h1>
+      <p class="intro-sub">Your relational pattern is not a personality type. It is how your feeling system learned to manage closeness, distance, and everything in between. Thirty statements. Eight archetypes. One honest look.</p>
+      <div class="archetype-pills">
+        <span class="pill">&#x1F436; Puppy</span>
+        <span class="pill">&#x1F431; Cat</span>
+        <span class="pill">&#x1F415; Sheepdog</span>
+        <span class="pill">&#x1F985; Hawk</span>
+        <span class="pill">&#x1F434; Horse</span>
+        <span class="pill">&#x1F422; Sea Turtle</span>
+        <span class="pill">&#x1F426; Hummingbird</span>
+        <span class="pill">&#x1F994; Hedgehog</span>
+      </div>
+      <div class="info-card">
+        <h3>How it works</h3>
+        <ul>
+          <li>Thirty statements about how you feel and relate</li>
+          <li>Rate each one: Never through Always</li>
+          <li>Answer with your first instinct, not how you wish you were</li>
+          <li>Takes about 8 to 10 minutes</li>
+          <li>Enter your name and email to receive your full profile</li>
+        </ul>
+      </div>
+      <button class="btn btn-primary" id="begin-btn">Begin the Assessment &#x2192;</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 2: QUESTIONS -->
+<div id="s-questions" class="screen">
+  <div class="site-header">
+    <div class="site-header-name">The Relationship Archetype Profile &middot; Dr. Scott Conkright</div>
+  </div>
+  <div class="container">
+    <div class="progress-bar-wrap">
+      <div class="progress-meta">
+        <span id="pg-label">Questions 1&#x2013;6</span>
+        <span id="pg-count">0 of 30 answered</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="pg-fill" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="section-label">Rate each statement as it applies to you honestly.</div>
+    <div id="q-container"></div>
+    <div class="q-nav">
+      <button class="btn btn-secondary" id="btn-back" style="display:none">&#x2190; Back</button>
+      <button class="btn btn-primary" id="btn-next">Continue &#x2192;</button>
+      <span class="nav-note" id="nav-note"></span>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 3: GATE -->
+<div id="s-gate" class="screen">
+  <div class="site-header">
+    <div class="site-header-name">The Relationship Archetype Profile &middot; Dr. Scott Conkright</div>
+  </div>
+  <div class="container">
+    <div class="gate-inner">
+      <div class="gate-icon">&#x2709;&#xFE0F;</div>
+      <h2>Your profile is ready.</h2>
+      <p>Enter your name and email to unlock your Relationship Archetype results. You will also receive occasional insights on relationships, affect, and what it means to live from your feelings first.</p>
+      <div class="gate-form-card">
+        <div class="field">
+          <label for="f-name">First name</label>
+          <input type="text" id="f-name" placeholder="Your first name" autocomplete="given-name">
+        </div>
+        <div class="field">
+          <label for="f-email">Email address</label>
+          <input type="email" id="f-email" placeholder="you@example.com" autocomplete="email">
+        </div>
+        <div class="gate-error" id="gate-err">Please enter a valid name and email address.</div>
+        <button class="btn btn-primary" id="gate-submit-btn" style="width:100%;margin-top:10px">See My Archetype &#x2192;</button>
+        <p class="privacy-note">No spam. Unsubscribe any time. Your results are never shared.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 4: LOADING -->
+<div id="s-loading" class="screen">
+  <div class="site-header">
+    <div class="site-header-name">The Relationship Archetype Profile &middot; Dr. Scott Conkright</div>
+  </div>
+  <div class="loading-wrap">
+    <div class="spinner"></div>
+    <p style="color:var(--muted);font-size:14px">Scoring your responses&#x2026;</p>
+  </div>
+</div>
+
+<!-- SCREEN 5: RESULTS -->
+<div id="s-results" class="screen">
+  <div class="site-header">
+    <div class="site-header-name">Dr. Scott Conkright &middot; Meaningful Happiness</div>
+  </div>
+  <div class="container">
+
+    <div class="results-top">
+      <div class="profile-sub" id="res-greeting">Your Relationship Archetype Profile</div>
+      <div class="profile-title">Your Relationship Archetype</div>
+    </div>
+
+    <!-- Primary archetype -->
+    <div class="primary-card">
+      <div class="card-label">Primary Archetype</div>
+      <span class="card-emoji" id="res-p-emoji"></span>
+      <div class="card-name" id="res-p-name"></div>
+      <div class="card-core" id="res-p-core"></div>
+      <div class="card-pct" id="res-p-pct"></div>
+      <div class="card-desc" id="res-p-desc"></div>
+    </div>
+
+    <!-- SHARE CARD -->
+    <div class="share-section">
+      <div class="share-section-heading">Your shareable card</div>
+      <div class="share-section-sub">Screenshot this or download it to share your result.</div>
+      <div class="share-card-frame">
+        <div id="share-card">
+          <div class="sc-inner" id="sc-inner">
+            <div class="sc-top-tag" id="sc-top-tag">Your Relationship Archetype</div>
+            <div class="sc-tag-line" id="sc-tag-line"></div>
+            <span class="sc-emoji" id="sc-emoji"></span>
+            <div class="sc-the">The</div>
+            <div class="sc-name" id="sc-name"></div>
+            <div class="sc-divider" id="sc-divider"></div>
+            <div class="sc-core" id="sc-core-card"></div>
+            <div class="sc-vulnerable" id="sc-vulnerable"></div>
+            <div class="sc-strength" id="sc-strength"></div>
+            <div class="sc-matches" id="sc-matches">
+              <span class="sc-matches-label">Most often with</span>
+              <span id="sc-matches-emoji"></span>
+              <span id="sc-matches-name"></span>
+            </div>
+            <div class="sc-bottom">
+              <div class="sc-score-chip" id="sc-score-chip"></div>
+              <div class="sc-footer-line" id="sc-footer-line"></div>
+              <div class="sc-url" id="sc-url">scottconkright.com</div>
+              <div class="sc-brand" id="sc-brand">Meaningful Happiness</div>
+            </div>
+          </div>
+          <!-- Decorative circles injected by JS -->
+        </div>
+      </div>
+      <div class="share-actions">
+        <div class="share-btn-row">
+          <button class="btn btn-primary" id="download-btn">&#x2193; Download Card</button>
+        </div>
+        <p class="share-hint">On mobile: press and hold the card, then save to photos.</p>
+      </div>
+    </div>
+
+    <!-- Secondary archetype -->
+    <div class="secondary-card">
+      <div class="sec-emoji" id="res-s-emoji"></div>
+      <div>
+        <div class="sec-label">Secondary Archetype</div>
+        <div class="sec-name" id="res-s-name"></div>
+        <div class="sec-desc" id="res-s-desc"></div>
+      </div>
+    </div>
+
+    <!-- Score bars -->
+    <div class="profile-bars-section">
+      <h3>The Relationship Archetype Profile</h3>
+      <div id="bars-container"></div>
+      <p class="bar-note">Scores above 70% indicate a strong pattern that consistently shapes your relational style. 45 to 69% signals meaningful presence. Most people carry two or three patterns in significant measure. A true zero on any archetype is meaningful: it suggests that pattern is genuinely inactive rather than simply less dominant.</p>
+    </div>
+
+    <!-- CTA -->
+    <div class="results-cta">
+      <h3>Want to go deeper?</h3>
+      <p>Your archetype shapes how you experience the Drop, the pre-cognitive shame signal that fires before you can think. Understanding your pattern is where real relational change begins.</p>
+      <a href="https://scottconkright.com" class="btn btn-primary" target="_blank">Explore with Dr. Conkright &#x2192;</a>
+    </div>
+
+    <div class="results-footer">
+      Developed by <a href="https://scottconkright.com" target="_blank">Dr. Scott Conkright</a>
+      &middot; Affect Relational Theory (A.R.T.)
+      &middot; <a href="https://scottconkright.com" target="_blank">Meaningful Happiness</a>
+    </div>
+  </div>
+</div>
+
+<!-- Hidden canvas for PNG download -->
+<canvas id="dl-canvas"></canvas>
+
+<script>
+// ============================================================
+// CONFIGURE YOUR FORMSPREE ENDPOINT
+// ============================================================
+var FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+
+// ============================================================
+// PER-ARCHETYPE CARD THEMES
+// bg1/bg2 = gradient stops, accent = highlight color, text = card text
+// ============================================================
+var CARD_THEMES = {
+  Puppy:       { bg1: "#2A1505", bg2: "#5C2E0A", accent: "#F2B84B", text: "#FDF3E0" },
+  Cat:         { bg1: "#0C1422", bg2: "#1A2A44", accent: "#7EB8D4", text: "#E4EEF5" },
+  Sheepdog:    { bg1: "#091A0D", bg2: "#143A1C", accent: "#72C47A", text: "#E5F2E7" },
+  Hawk:        { bg1: "#1A0808", bg2: "#3A1010", accent: "#D4884A", text: "#F5EBE3" },
+  Horse:       { bg1: "#1C0E04", bg2: "#3D2005", accent: "#D4855A", text: "#F5EBE0" },
+  SeaTurtle:   { bg1: "#051A18", bg2: "#0A3835", accent: "#4EC9C0", text: "#E0F3F2" },
+  Hummingbird: { bg1: "#14091E", bg2: "#2C1245", accent: "#C47ACA", text: "#F0E5F5" },
+  Hedgehog:    { bg1: "#090D1C", bg2: "#141A35", accent: "#8A9EC4", text: "#E3E7F5" }
+};
+
+// Actual Unicode emoji characters for Canvas rendering
+var EMOJI_CHARS = {
+  Puppy:       "\uD83D\uDC36",  // 🐶
+  Cat:         "\uD83D\uDC31",  // 🐱
+  Sheepdog:    "\uD83D\uDC15",  // 🐕
+  Hawk:        "\uD83E\uDD85",  // 🦅
+  Horse:       "\uD83D\uDC34",  // 🐴
+  SeaTurtle:   "\uD83D\uDC22",  // 🐢
+  Hummingbird: "\uD83D\uDC26",  // 🐦
+  Hedgehog:    "\uD83E\uDD94"   // 🦔
+};
+
+// ============================================================
+// QUESTIONS
+// ============================================================
+var QUESTIONS = [
+  { id:1,  text: "When someone I care about goes quiet, I find myself checking in before they have said anything is wrong.", weights: { Puppy:2, Sheepdog:1 } },
+  { id:2,  text: "After a conflict, I need time alone before I can genuinely reconnect.", weights: { SeaTurtle:2, Cat:1 } },
+  { id:3,  text: "I feel most settled when I am actively helping someone I care about work through something difficult.", weights: { Sheepdog:3 } },
+  { id:4,  text: "When someone challenges me directly, my first internal move is to defend my position rather than consider theirs.", weights: { Hawk:3 } },
+  { id:5,  text: "I notice I can go from feeling fully invested in a relationship to needing distance, sometimes within the same day.", weights: { Horse:2, Hummingbird:1 } },
+  { id:6,  text: "I keep significant parts of my emotional life private, even from people I am close to.", weights: { Hedgehog:2, Cat:1 } },
+  { id:7,  text: "When I am excited or happy, I want to share it with the people I love almost immediately.", weights: { Puppy:3 } },
+  { id:8,  text: "I tend to assess whether a relationship is worth investing in before I let myself get too involved.", weights: { Cat:2, Hawk:1 } },
+  { id:9,  text: "When things are going well in a relationship, part of me braces for when it changes.", weights: { Puppy:2, Horse:1 } },
+  { id:10, text: "I find it easier to offer support than to ask for it.", weights: { Sheepdog:2, Cat:1 } },
+  { id:11, text: "When I feel disconnected from someone I care about, it is hard to focus on much else until it is resolved.", weights: { Puppy:3 } },
+  { id:12, text: "I need my own space within a relationship, even when things are going well.", weights: { SeaTurtle:2, Cat:1 } },
+  { id:13, text: "When someone I care about is struggling, I automatically start thinking about what I can do to fix it.", weights: { Sheepdog:3 } },
+  { id:14, text: "I get genuinely frustrated when people do not meet the standards I have set for how I expect to be treated.", weights: { Hawk:2, Cat:1 } },
+  { id:15, text: "My enthusiasm for a person or project tends to fade once the initial novelty wears off.", weights: { Hummingbird:3 } },
+  { id:16, text: "I feel stronger emotions than most people would guess from watching me.", weights: { Hedgehog:2, SeaTurtle:1 } },
+  { id:17, text: "When someone withdraws from me, my instinct is to reach harder, not give them space.", weights: { Puppy:3 } },
+  { id:18, text: "People often tell me I am hard to read.", weights: { Hedgehog:2, Cat:1 } },
+  { id:19, text: "I feel most alive in relationships when there is genuine intensity, even if it is uncomfortable.", weights: { Horse:2, Hummingbird:1 } },
+  { id:20, text: "I prefer to let a relationship develop slowly rather than dive in quickly.", weights: { SeaTurtle:2, Hedgehog:1 } },
+  { id:21, text: "I notice myself adjusting my behavior to manage the emotional atmosphere in a room.", weights: { Sheepdog:2, Puppy:1 } },
+  { id:22, text: "When I am criticized, my immediate internal response is closer to anger than to hurt.", weights: { Hawk:3 } },
+  { id:23, text: "I can be genuinely interested in several different people or projects at once, without any of them getting my full attention.", weights: { Hummingbird:3 } },
+  { id:24, text: "I sometimes realize I have been suppressing a want or need for so long that I have lost clear access to it.", weights: { Hedgehog:2, SeaTurtle:1 } },
+  { id:25, text: "When a relationship is going well, I find myself investing more rather than relaxing, aware of how much there is to lose.", weights: { Puppy:2, Sheepdog:1 } },
+  { id:26, text: "Strong emotion directed at me makes me uncomfortable, even when it is positive.", weights: { Hedgehog:2, Cat:1 } },
+  { id:27, text: "I find it easier to care for others when I do not need anything from them in return.", weights: { Sheepdog:2, Cat:1 } },
+  { id:28, text: "I oscillate between wanting closeness and wanting to pull back, often without knowing why.", weights: { Horse:2, Hummingbird:1 } },
+  { id:29, text: "I hold back from fully expressing how much I care about someone, even when the feeling is strong.", weights: { Hedgehog:2, Cat:1 } },
+  { id:30, text: "After a relationship ends or changes significantly, I tend to move toward new connections rather than sit with the loss.", weights: { Hummingbird:2, Horse:1 } }
+];
+
+var MAX_SCORES = { Puppy:64, Cat:44, Sheepdog:56, Hawk:36, Horse:32, SeaTurtle:32, Hummingbird:44, Hedgehog:52 };
+
+var ARCHETYPES = {
+  Puppy:       { emoji:"&#x1F436;", core:"Reaches toward connection when the Drop fires.", vulnerable:"You reach because you believe connection is worth the risk.", strength:"You are often the reason people feel found.", matches:"Cat", desc:"You monitor relational temperature closely and tend to accommodate before being asked to. When something shifts in a relationship, you feel it before you can name it, and your instinct is to move toward the person. The work is learning that connection is real even when it is not actively being confirmed." },
+  Cat:         { emoji:"&#x1F431;", core:"Manages exposure through evaluation and strategic distance.", vulnerable:"The distance is protection, not indifference.", strength:"When you choose someone, the loyalty is real and lasting.", matches:"Puppy", desc:"You want connection deeply, but you have learned that full investment without protection is costly. You regulate through distance, not indifference, and you return when you have reestablished yourself internally. The work is letting yourself be seen without losing your sense of self." },
+  Sheepdog:    { emoji:"&#x1F415;", core:"Routes the Drop into protective action.", vulnerable:"The care is genuine. So is the fear of not being needed.", strength:"You create safety for people before they know they need it.", matches:"Hawk", desc:"You feel most settled when useful to someone you care about. Your relational radar stays on, and when someone is struggling, you move toward them before they ask. The warmth you bring is real. The work is distinguishing genuine care from the anxiety underneath it." },
+  Hawk:        { emoji:"&#x1F985;", core:"Routes the Drop outward into defense or dominance.", vulnerable:"The longing beneath the directness is to be met as an equal.", strength:"Your clarity, offered without pressure, is rare.", matches:"Horse", desc:"The shame signal converts to anger fast enough that the shame itself is rarely visible, even to you. You value directness, expect reciprocity, and have little patience for what feels like performance. You are not cold; you are clear. The work is letting others arrive at clarity at their own pace." },
+  Horse:       { emoji:"&#x1F434;", core:"Runs at high amplitude in both directions.", vulnerable:"The amplitude is feeling at full volume, not instability.", strength:"When you are fully present, people feel it completely.", matches:"Hawk", desc:"You cycle between full investment and crash, carrying genuine depth of feeling. You are capable of deep attachment, but you need room to feel like yourself. Constraint registers quickly and you move away from it before you can say why. The work is communicating your need for space in ways others can receive." },
+  SeaTurtle:   { emoji:"&#x1F422;", core:"Manages the Drop through preemptive distance.", vulnerable:"The space protects you, and sometimes holds people further than you meant.", strength:"What you offer, when you offer it, holds.", matches:"Puppy", desc:"You sense exposure coming and create space before it arrives. You are not withdrawn; you are unhurried. When you do open up, the connection you offer is real and lasting. External pressure to speed up usually has the opposite effect. The work is helping others understand your pace as a relational style, not a flaw." },
+  Hummingbird: { emoji:"&#x1F426;", core:"Moves fast enough to outrun the Drop.", vulnerable:"Staying does not have to mean losing yourself.", strength:"You bring aliveness that genuinely lights people up.", matches:"Sheepdog", desc:"You generate new interest before the shame signal consolidates. New ideas, new people, new possibilities light you up and your energy is genuinely compelling. But it can shift before others have caught up. The work is developing the capacity to stay, even when the initial charge has faded." },
+  Hedgehog:    { emoji:"&#x1F994;", core:"Manages the Drop through containment.", vulnerable:"You feel more than most people around you will ever know.", strength:"When you let someone in, what they receive is the real thing.", matches:"Puppy", desc:"Rich interior, measured surface. You feel things at depth and show very little. You have built your containment carefully because you know what it costs to be exposed before it is safe. When someone earns your trust, the connection you offer is genuine and durable. The work is letting the shell come down incrementally." }
+};
+
+// ============================================================
+// STATE
+// ============================================================
+var answers = {};
+var chunk = 0;
+var CHUNK_SIZE = 6;
+var NUM_CHUNKS = 5;
+var userName = "";
+var currentPrimaryName = "";
+var currentPrimaryPct = 0;
+
+// ============================================================
+// SCREEN NAV
+// ============================================================
+function showScreen(id) {
+  var all = document.querySelectorAll(".screen");
+  for (var i = 0; i < all.length; i++) all[i].classList.remove("active");
+  document.getElementById(id).classList.add("active");
+  window.scrollTo(0, 0);
+}
+
+// ============================================================
+// QUESTIONS
+// ============================================================
+function chunkQs() { return QUESTIONS.slice(chunk * CHUNK_SIZE, chunk * CHUNK_SIZE + CHUNK_SIZE); }
+
+function renderChunk() {
+  var qs = chunkQs();
+  var start = chunk * CHUNK_SIZE;
+  var total = Object.keys(answers).length;
+  document.getElementById("pg-label").textContent = "Questions " + (start + 1) + "\u2013" + (start + qs.length) + " of 30";
+  document.getElementById("pg-count").textContent = total + " of 30 answered";
+  document.getElementById("pg-fill").style.width = Math.round((total / 30) * 100) + "%";
+  document.getElementById("btn-back").style.display = chunk > 0 ? "inline-block" : "none";
+  document.getElementById("btn-next").textContent = chunk < NUM_CHUNKS - 1 ? "Continue \u2192" : "See My Results \u2192";
+
+  var opts = ["Never", "Rarely", "Sometimes", "Often", "Always"];
+  var container = document.getElementById("q-container");
+  container.innerHTML = "";
+
+  for (var i = 0; i < qs.length; i++) {
+    var q = qs[i];
+    var block = document.createElement("div");
+    block.className = "q-block" + (answers[q.id] !== undefined ? " answered" : "");
+    block.id = "qb-" + q.id;
+    var html = '<span class="q-num">' + (start + i + 1) + " of 30</span>";
+    html += '<div class="q-text">' + q.text + "</div>";
+    html += '<div class="response-row">';
+    for (var j = 0; j < opts.length; j++) {
+      html += '<button class="resp-btn' + (answers[q.id] === j ? " sel" : "") + '"';
+      html += ' data-qid="' + q.id + '" data-val="' + j + '">' + opts[j] + "</button>";
+    }
+    html += "</div>";
+    block.innerHTML = html;
+    container.appendChild(block);
+  }
+
+  container.onclick = function(e) {
+    var btn = e.target;
+    if (!btn.classList.contains("resp-btn")) return;
+    var qId = parseInt(btn.getAttribute("data-qid"), 10);
+    var val = parseInt(btn.getAttribute("data-val"), 10);
+    answers[qId] = val;
+    var block = document.getElementById("qb-" + qId);
+    block.classList.add("answered");
+    var btns = block.querySelectorAll(".resp-btn");
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].classList.toggle("sel", parseInt(btns[i].getAttribute("data-val"), 10) === val);
+    }
+    var total = Object.keys(answers).length;
+    document.getElementById("pg-count").textContent = total + " of 30 answered";
+    document.getElementById("pg-fill").style.width = Math.round((total / 30) * 100) + "%";
+    document.getElementById("nav-note").textContent = "";
+  };
+}
+
+function nextChunk() {
+  var qs = chunkQs();
+  for (var i = 0; i < qs.length; i++) {
+    if (answers[qs[i].id] === undefined) {
+      document.getElementById("nav-note").textContent = "Please answer all questions to continue.";
+      return;
+    }
+  }
+  document.getElementById("nav-note").textContent = "";
+  if (chunk < NUM_CHUNKS - 1) { chunk++; renderChunk(); }
+  else { showScreen("s-gate"); }
+}
+
+function prevChunk() { if (chunk > 0) { chunk--; renderChunk(); } }
+
+function startAssessment() { chunk = 0; renderChunk(); showScreen("s-questions"); }
+
+// ============================================================
+// GATE
+// ============================================================
+function submitGate() {
+  var name = document.getElementById("f-name").value.trim();
+  var email = document.getElementById("f-email").value.trim();
+  var errEl = document.getElementById("gate-err");
+  if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errEl.style.display = "block"; return; }
+  errEl.style.display = "none";
+  userName = name;
+  showScreen("s-loading");
+  var top = getTopTwo();
+  fetch(FORMSPREE_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify({ name: name, email: email, primary_archetype: top[0], secondary_archetype: top[1], submitted: new Date().toISOString() })
+  }).catch(function() {});
+  setTimeout(buildResults, 1200);
+}
+
+// ============================================================
+// SCORING
+// ============================================================
+function computeScores() {
+  var raw = { Puppy:0, Cat:0, Sheepdog:0, Hawk:0, Horse:0, SeaTurtle:0, Hummingbird:0, Hedgehog:0 };
+  for (var i = 0; i < QUESTIONS.length; i++) {
+    var q = QUESTIONS[i];
+    var val = answers[q.id] !== undefined ? answers[q.id] : 0;
+    var keys = Object.keys(q.weights);
+    for (var j = 0; j < keys.length; j++) raw[keys[j]] += val * q.weights[keys[j]];
+  }
+  var pct = {};
+  var names = Object.keys(raw);
+  for (var k = 0; k < names.length; k++) pct[names[k]] = Math.round((raw[names[k]] / MAX_SCORES[names[k]]) * 100);
+  return pct;
+}
+
+function sortedNames(scores) { return Object.keys(scores).sort(function(a, b) { return scores[b] - scores[a]; }); }
+function getTopTwo() { var s = computeScores(); var sorted = sortedNames(s); return [sorted[0], sorted[1]]; }
+
+// ============================================================
+// SHARE CARD
+// ============================================================
+function buildShareCard(archName, pct) {
+  var theme = CARD_THEMES[archName];
+  var arch = ARCHETYPES[archName];
+  var emoji = EMOJI_CHARS[archName];
+
+  var card = document.getElementById("share-card");
+  // Background gradient
+  card.style.background = "linear-gradient(145deg, " + theme.bg1 + " 0%, " + theme.bg2 + " 100%)";
+
+  // Remove old circles
+  var oldCircles = card.querySelectorAll(".sc-circle");
+  for (var i = 0; i < oldCircles.length; i++) oldCircles[i].remove();
+
+  // Decorative circles
+  var c1 = document.createElement("div");
+  c1.className = "sc-circle";
+  c1.style.cssText = "width:320px;height:320px;top:-60px;right:-80px;border:1px solid " + theme.accent + "22;";
+  card.appendChild(c1);
+  var c2 = document.createElement("div");
+  c2.className = "sc-circle";
+  c2.style.cssText = "width:220px;height:220px;top:-10px;right:-30px;border:1px solid " + theme.accent + "18;";
+  card.appendChild(c2);
+
+  // Text colors
+  var inner = document.getElementById("sc-inner");
+  inner.style.color = theme.text;
+
+  // Top tag
+  document.getElementById("sc-top-tag").style.color = theme.accent;
+  document.getElementById("sc-tag-line").style.background = theme.accent;
+
+  // Emoji
+  document.getElementById("sc-emoji").textContent = emoji;
+
+  // Name
+  document.getElementById("sc-name").textContent = archName;
+
+  // Divider
+  document.getElementById("sc-divider").style.background = theme.text;
+
+  // Core
+  document.getElementById("sc-core-card").textContent = arch.core;
+
+  // Vulnerability and strength
+  document.getElementById("sc-vulnerable").textContent = arch.vulnerable;
+  document.getElementById("sc-vulnerable").style.color = theme.text;
+  document.getElementById("sc-strength").textContent = arch.strength;
+  document.getElementById("sc-strength").style.color = theme.accent;
+
+  // Matches with
+  var matchName = arch.matches;
+  var matchEmoji = EMOJI_CHARS[matchName];
+  document.getElementById("sc-matches-emoji").textContent = matchEmoji;
+  document.getElementById("sc-matches-name").textContent = "The " + matchName;
+  document.getElementById("sc-matches").style.color = theme.text;
+
+  // Score chip
+  var chip = document.getElementById("sc-score-chip");
+  chip.textContent = pct + "% match";
+  chip.style.color = theme.accent;
+
+  // Footer
+  document.getElementById("sc-footer-line").style.background = theme.text;
+  document.getElementById("sc-url").style.color = theme.text;
+  document.getElementById("sc-brand").style.color = theme.accent;
+}
+
+// ============================================================
+// CANVAS DOWNLOAD
+// ============================================================
+function downloadCard() {
+  var W = 680, H = 1400;
+  var canvas = document.getElementById("dl-canvas");
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext("2d");
+  var arch = currentPrimaryName;
+  var theme = CARD_THEMES[arch];
+  var archetypeData = ARCHETYPES[arch];
+
+  // Background gradient
+  var grad = ctx.createLinearGradient(0, 0, W * 0.5, H);
+  grad.addColorStop(0, theme.bg1);
+  grad.addColorStop(1, theme.bg2);
+  ctx.fillStyle = grad;
+  roundRect(ctx, 0, 0, W, H, 36);
+  ctx.fill();
+
+  // Subtle noise via tiny random dots
+  ctx.save();
+  roundRect(ctx, 0, 0, W, H, 36);
+  ctx.clip();
+  for (var i = 0; i < 8000; i++) {
+    var x = Math.random() * W;
+    var y = Math.random() * H;
+    ctx.fillStyle = "rgba(255,255,255," + (Math.random() * 0.035) + ")";
+    ctx.fillRect(x, y, 1, 1);
+  }
+
+  // Decorative circles
+  ctx.strokeStyle = hexAlpha(theme.accent, 0.12);
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.arc(W * 0.88, 180, 280, 0, Math.PI * 2); ctx.stroke();
+  ctx.beginPath(); ctx.arc(W * 0.88, 180, 190, 0, Math.PI * 2); ctx.stroke();
+
+  // Top tag
+  ctx.fillStyle = theme.accent;
+  ctx.font = "500 21px \"DM Sans\", sans-serif";
+  ctx.fillText("YOUR RELATIONSHIP ARCHETYPE", 56, 90);
+
+  // Tag line
+  ctx.fillStyle = hexAlpha(theme.accent, 0.35);
+  ctx.fillRect(56, 106, 50, 1);
+
+  // Emoji
+  ctx.font = "110px serif";
+  ctx.fillStyle = theme.text;
+  ctx.fillText(EMOJI_CHARS[arch], 44, 290);
+
+  // "The"
+  ctx.font = "italic 30px \"Playfair Display\", Georgia, serif";
+  ctx.fillStyle = hexAlpha(theme.text, 0.7);
+  ctx.fillText("The", 56, 380);
+
+  // Archetype name
+  ctx.font = "bold 96px \"Playfair Display\", Georgia, serif";
+  ctx.fillStyle = theme.text;
+  ctx.fillText(arch, 56, 480);
+
+  // Divider
+  ctx.fillStyle = hexAlpha(theme.text, 0.22);
+  ctx.fillRect(56, 510, 60, 1);
+
+  // Core pattern text (wrapped)
+  ctx.font = "italic 26px \"Playfair Display\", Georgia, serif";
+  ctx.fillStyle = hexAlpha(theme.text, 0.75);
+  var coreY = wrapCanvasText(ctx, archetypeData.core, 56, 540, W - 112, 40);
+
+  // Vulnerable line
+  ctx.font = "italic 24px \"Playfair Display\", Georgia, serif";
+  ctx.fillStyle = hexAlpha(theme.text, 0.6);
+  var vulnY = wrapCanvasText(ctx, archetypeData.vulnerable, 56, coreY + 36, W - 112, 38);
+
+  // Strength line
+  ctx.font = "500 24px \"DM Sans\", sans-serif";
+  ctx.fillStyle = theme.accent;
+  var strengthY = wrapCanvasText(ctx, archetypeData.strength, 56, vulnY + 30, W - 112, 38);
+
+  // Matches with
+  var matchName = archetypeData.matches;
+  var matchEmoji = EMOJI_CHARS[matchName];
+  ctx.font = "500 20px \"DM Sans\", sans-serif";
+  ctx.fillStyle = hexAlpha(theme.text, 0.55);
+  ctx.fillText("MOST OFTEN WITH", 56, strengthY + 42);
+  ctx.font = "26px serif";
+  ctx.fillStyle = theme.text;
+  ctx.fillText(matchEmoji + "  The " + matchName, 56, strengthY + 72);
+
+  // Score chip
+  var chipY = strengthY + 110;
+  ctx.fillStyle = hexAlpha(theme.accent, 0.18);
+  roundRect(ctx, 56, chipY, 140, 38, 19);
+  ctx.fill();
+  ctx.font = "500 20px \"DM Sans\", sans-serif";
+  ctx.fillStyle = theme.accent;
+  ctx.fillText(currentPrimaryPct + "% match", 76, chipY + 24);
+
+  // Footer line
+  ctx.fillStyle = hexAlpha(theme.text, 0.16);
+  ctx.fillRect(56, chipY + 60, W - 112, 1);
+
+  // URL
+  ctx.font = "20px \"DM Sans\", sans-serif";
+  ctx.fillStyle = hexAlpha(theme.text, 0.55);
+  ctx.fillText("scottconkright.com", 56, chipY + 98);
+
+  // Brand
+  ctx.font = "italic 19px \"Playfair Display\", Georgia, serif";
+  ctx.fillStyle = hexAlpha(theme.accent, 0.65);
+  ctx.fillText("Meaningful Happiness", 56, chipY + 130);
+
+  ctx.restore();
+
+  // Download
+  document.fonts.ready.then(function() {
+    var link = document.createElement("a");
+    link.download = "my-relationship-archetype-" + arch.toLowerCase() + ".png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  });
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function hexAlpha(hex, alpha) {
+  var r = parseInt(hex.slice(1, 3), 16);
+  var g = parseInt(hex.slice(3, 5), 16);
+  var b = parseInt(hex.slice(5, 7), 16);
+  return "rgba(" + r + "," + g + "," + b + "," + alpha + ")";
+}
+
+function wrapCanvasText(ctx, text, x, y, maxW, lineH) {
+  var words = text.split(" ");
+  var line = "";
+  for (var i = 0; i < words.length; i++) {
+    var test = line + words[i] + " ";
+    if (ctx.measureText(test).width > maxW && i > 0) {
+      ctx.fillText(line.trim(), x, y);
+      line = words[i] + " ";
+      y += lineH;
+    } else { line = test; }
+  }
+  ctx.fillText(line.trim(), x, y);
+  return y;
+}
+
+// ============================================================
+// RESULTS
+// ============================================================
+function buildResults() {
+  var scores = computeScores();
+  var sorted = sortedNames(scores);
+  var pName = sorted[0];
+  var sName = sorted[1];
+  var p = ARCHETYPES[pName];
+  var s = ARCHETYPES[sName];
+
+  currentPrimaryName = pName;
+  currentPrimaryPct = scores[pName];
+
+  document.getElementById("res-greeting").textContent =
+    userName ? userName + "\u2019s Relationship Archetype Profile" : "Your Relationship Archetype Profile";
+
+  document.getElementById("res-p-emoji").innerHTML = p.emoji;
+  document.getElementById("res-p-name").textContent = "The " + pName;
+  document.getElementById("res-p-core").textContent = p.core;
+  document.getElementById("res-p-pct").textContent = scores[pName] + "% match";
+  document.getElementById("res-p-desc").textContent = p.desc;
+
+  document.getElementById("res-s-emoji").innerHTML = s.emoji;
+  document.getElementById("res-s-name").textContent = "The " + sName;
+  document.getElementById("res-s-desc").textContent = s.desc;
+
+  var barsEl = document.getElementById("bars-container");
+  barsEl.innerHTML = "";
+  for (var i = 0; i < sorted.length; i++) {
+    var name = sorted[i];
+    var arch = ARCHETYPES[name];
+    var pct = scores[name];
+    var row = document.createElement("div");
+    row.className = "bar-row";
+    row.innerHTML =
+      '<div class="bar-label"><span>' + arch.emoji + "</span>" + name + "</div>" +
+      '<div class="bar-track"><div class="bar-fill' + (i === 0 ? " is-primary" : "") +
+      '" style="width:0%" data-w="' + pct + '"></div></div>' +
+      '<div class="bar-pct">' + pct + "%</div>";
+    barsEl.appendChild(row);
+  }
+
+  // Build the share card
+  buildShareCard(pName, scores[pName]);
+
+  showScreen("s-results");
+
+  setTimeout(function() {
+    var fills = document.querySelectorAll(".bar-fill");
+    for (var i = 0; i < fills.length; i++) fills[i].style.width = fills[i].getAttribute("data-w") + "%";
+  }, 80);
+}
+
+// ============================================================
+// EVENT LISTENERS
+// ============================================================
+document.getElementById("begin-btn").addEventListener("click", startAssessment);
+document.getElementById("btn-next").addEventListener("click", nextChunk);
+document.getElementById("btn-back").addEventListener("click", prevChunk);
+document.getElementById("gate-submit-btn").addEventListener("click", submitGate);
+document.getElementById("download-btn").addEventListener("click", downloadCard);
+</script>
+</body>
+</html>
